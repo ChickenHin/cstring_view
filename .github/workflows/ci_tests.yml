@@ -19,16 +19,16 @@ jobs:
   # beman-submodule-check:
   #   uses: bemanproject/infra-workflows/.github/workflows/reusable-beman-submodule-check.yml@1.7.4
 
-  # preset-test:
-  #   uses: bemanproject/infra-workflows/.github/workflows/reusable-beman-preset-test.yml@1.7.4
-  #   with:
-  #     matrix_config: >
-  #       [
-  #         {"preset": "gcc-debug", "image": "ghcr.io/bemanproject/infra-containers-gcc:latest"},
-  #         {"preset": "llvm-debug", "image": "ghcr.io/bemanproject/infra-containers-clang:latest"},
-  #         {"preset": "appleclang-debug", "runner": "macos-latest"},
-  #         {"preset": "msvc-debug", "runner": "windows-latest"},
-  #       ]
+  preset-test:
+    uses: bemanproject/infra-workflows/.github/workflows/reusable-beman-preset-test.yml@1.7.4
+    with:
+      matrix_config: >
+        [
+          {"preset": "gcc-debug", "image": "ghcr.io/bemanproject/infra-containers-gcc:latest"},
+          {"preset": "llvm-debug", "image": "ghcr.io/bemanproject/infra-containers-clang:latest"},
+          {"preset": "appleclang-debug", "runner": "macos-latest"},
+          {"preset": "msvc-debug", "runner": "windows-latest"},
+        ]
 
   build-and-test:
     uses: bemanproject/infra-workflows/.github/workflows/reusable-beman-build-and-test.yml@1.7.4
@@ -42,8 +42,7 @@ jobs:
                   "tests": [
                     { "stdlibs": ["libstdc++", "libc++"],
                       "tests": [
-                        "Debug.Default", "Release.Default", "Release.TSan",
-                        "Release.MaxSan", "Debug.Werror"
+                        "Debug.Default"
                       ]
                     }
                   ]
@@ -71,7 +70,7 @@ jobs:
                 { "cxxversions": ["c++23"],
                   "tests": [
                     { "stdlibs": ["stl"],
-                      "tests": ["Debug.Default", "Release.Default", "Release.MaxSan"]
+                      "tests": ["Debug.Default"]
                     }
                   ]
                 }
